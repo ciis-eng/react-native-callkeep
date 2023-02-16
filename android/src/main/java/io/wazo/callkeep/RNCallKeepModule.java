@@ -937,6 +937,11 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
     }
 
     private void registerPhoneAccount(Context appContext) {
+        if(true)
+        {
+            Log.w(TAG, "[RNCallKeepModule] registerPhoneAccount ignored forcibly");
+            return;
+        }
         if (!isConnectionServiceAvailable()) {
             Log.w(TAG, "[RNCallKeepModule] registerPhoneAccount ignored due to no ConnectionService");
             return;
