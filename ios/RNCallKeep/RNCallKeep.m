@@ -1043,11 +1043,23 @@ RCT_EXPORT_METHOD(reportUpdatedCall:(NSString *)uuidString contactIdentifier:(NS
 #ifdef DEBUG
     NSLog(@"[RNCallKeep][CXProviderDelegate][provider:performAnswerCallAction]");
 #endif
-    [self configureAudioSession];
-    [self sendEventWithNameWrapper:RNCallKeepPerformAnswerCallAction body:@{ @"callUUID": [action.callUUID.UUIDString lowercaseString] }];
-    [action fulfill];
+    [self checkUnlockedAndFulfillWithAction:action counter:0];
+
 }
 
+- (void)checkUnlockedAndFulfillWithAction:(CXAnswerCallAction *)action counter:(int)counter {
+    if ([UIApplication sharedApplication].isProtectedDataAvailable) {
+        [self configureAudioSession];
+        [self sendEventWithNameWrapper:RNCallKeepPerformAnswerCallAction body:@{ @"callUUID": [action.callUUID.UUIDString lowercaseString] }];
+        [action fulfill];
+    } else if (counter > 180) { // fail if waiting for more than 3 minutes
+        [action fail];
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self checkUnlockedAndFulfillWithAction:action counter:counter + 1];
+        });
+    }
+}
 // Ending incoming call
 - (void)provider:(CXProvider *)provider performEndCallAction:(CXEndCallAction *)action
 {
