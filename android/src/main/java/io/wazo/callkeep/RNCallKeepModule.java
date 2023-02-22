@@ -879,8 +879,9 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
     }
 
     public static Boolean isConnectionServiceAvailable() {
-        // PhoneAccount is available since api level 23
-        return Build.VERSION.SDK_INT >= 23;
+        return false;
+//        // PhoneAccount is available since api level 23
+//        return Build.VERSION.SDK_INT >= 23;
     }
 
     @ReactMethod
@@ -955,7 +956,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
             builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
         }
         else {
-            builder.setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER);
+//            builder.setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER);
         }
 
         if (_settings != null && _settings.hasKey("imageName")) {
