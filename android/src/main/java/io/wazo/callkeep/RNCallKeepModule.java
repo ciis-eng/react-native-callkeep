@@ -952,6 +952,13 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
 
         PhoneAccount.Builder builder = new PhoneAccount.Builder(handle, appName);
         builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
+        if (isSelfManaged()) {
+            builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
+        }
+        else {
+            builder.setCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+            builder.setCapabilities(PhoneAccount.CAPABILITY_CONNECTION_MANAGER);
+        }
 
         if (_settings != null && _settings.hasKey("imageName")) {
             int identifier = appContext.getResources().getIdentifier(_settings.getString("imageName"), "drawable", appContext.getPackageName());
