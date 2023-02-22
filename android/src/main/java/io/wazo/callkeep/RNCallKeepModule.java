@@ -956,6 +956,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
         }
         else {
             builder.setCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+            builder.setCapabilities(PhoneAccount.CAPABILITY_CONNECTION_MANAGER);
         }
 
         if (_settings != null && _settings.hasKey("imageName")) {
