@@ -317,7 +317,6 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
             Log.w(TAG, "[RNCallKeepModule] displayIncomingCall ignored due to no ConnectionService or no phone account");
             return;
         }
-        this.initializeTelecomManager();
 
         Log.d(TAG, "[RNCallKeepModule] displayIncomingCall, uuid: " + uuid + ", number: " + number + ", callerName: " + callerName + ", hasVideo: " + hasVideo);
 
@@ -952,13 +951,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
         String appName = this.getApplicationName(context);
 
         PhoneAccount.Builder builder = new PhoneAccount.Builder(handle, appName);
-        if (isSelfManaged()) {
-            builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
-        }
-        else {
-            builder.setCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
-            builder.setCapabilities(PhoneAccount.CAPABILITY_CONNECTION_MANAGER);
-        }
+        builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
 
         if (_settings != null && _settings.hasKey("imageName")) {
             int identifier = appContext.getResources().getIdentifier(_settings.getString("imageName"), "drawable", appContext.getPackageName());
