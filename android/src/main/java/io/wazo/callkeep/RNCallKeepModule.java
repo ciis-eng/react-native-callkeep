@@ -951,7 +951,6 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
         String appName = this.getApplicationName(context);
 
         PhoneAccount.Builder builder = new PhoneAccount.Builder(handle, appName);
-        builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
         if (isSelfManaged()) {
             builder.setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED);
         }
