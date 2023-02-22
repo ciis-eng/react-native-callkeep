@@ -879,7 +879,6 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule {
     }
 
     public static Boolean isConnectionServiceAvailable() {
-        return false;
         // PhoneAccount is available since api level 23
         return Build.VERSION.SDK_INT >= 23;
     }
